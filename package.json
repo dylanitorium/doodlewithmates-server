@@ -1,12 +1,13 @@
 {
-  "name": "doodle-with-mates",
+  "name": "doodle-with-mates-server",
   "version": "0.0.1",
-  "description": "",
+  "description": "Backend for doodle with mates realtime whiteboard",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "babel-node config/rethinkdb/init.js"
   },
+  "repository": "https://github.com/dylanitorium/doodlewithmates-server",
   "author": "",
   "license": "ISC",
   "devDependencies": {
