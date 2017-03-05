@@ -1,0 +1,18 @@
+{
+  "extends":[
+    "airbnb"
+  ],
+  "globals":{
+    "window",
+    "document",
+    "fetch",
+    "location",
+  },
+  "rules":{
+    "react/jsx-filename-extension": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "no-console": "off",
+    "no-param-reassign": ["error", { "props": false }]
+  }
+}

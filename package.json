@@ -1,0 +1,38 @@
+{
+  "name": "doodle-with-mates",
+  "version": "0.0.1",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "babel-node config/rethinkdb/init.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0"
+  },
+  "dependencies": {
+    "async": "^2.1.5",
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.17.0",
+    "babel-polyfill": "^6.20.0",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "fb": "^1.1.1",
+    "jsonwebtoken": "^7.3.0",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "rethinkdb": "^2.3.3",
+    "socket.io": "^1.7.3"
+  }
+}
