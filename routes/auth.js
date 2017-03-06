@@ -12,5 +12,6 @@ export const login = (req, res) => {
   auth.fetchFacebookAccount(auth_code)
   .then(users.createOrGetUser(req))
   .then(jwt.signJwtToken)
-  .then(token => (res.json({ token })));
+  .then(token => (res.json({ token })))
+  .catch(({ error }) => (console.error(error)));
 };

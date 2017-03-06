@@ -8,6 +8,12 @@ const getAccessTokenParameters = code => ({
   code,
 });
 
+const userProperties = ({ id, name, picture}) => ({
+  id,
+  name,
+  picture: picture.data.url,
+});
+
 const hasError = response => (!response || response.error);
 
 const formatValidResponse = ({ access_token, expires }) => ({
@@ -34,15 +40,21 @@ export const getAccessToken = code => (
   })
 );
 
-export const fetchFacebookAccount = code => (
+export const fetchUserDetails = ({ access_token }) => (
   new Promise((resolve, reject) => {
-    getAccessToken(code).then(({ access_token }) => {
-      FB.api('/me', { access_token }, (response) => {
-        if (hasError(response)) {
-          reject(response);
-        }
-        resolve(response);
-      });
-    }).catch(({ error }) => (console.error(error)));
+    FB.api('/me', {
+      access_token,
+      fields: ['id', 'name', 'picture'],
+    }, (details) => {
+      if (hasError(details)) {
+        reject(details);
+      }
+      resolve(userProperties(details));
+    });
   })
+);
+
+
+export const fetchFacebookAccount = code => (
+    getAccessToken(code).then(fetchUserDetails)
 );
