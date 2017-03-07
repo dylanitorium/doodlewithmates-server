@@ -1,6 +1,7 @@
 // Allows us to use babel on the server
 import 'babel-polyfill';
 import express from 'express';
+import http from 'http';
 
 import config from './config/environment';
 import {
@@ -9,6 +10,7 @@ import {
 } from './middleware/database';
 import middlewareConfig from './middleware';
 import routerConfig from './routes';
+import socketConfig from './config/socket.io';
 
 const {
   EXPRESS: {
@@ -19,16 +21,18 @@ const {
 // Server Config
 // =============
 const app = express();
+const server = http.createServer(app);
 const port = PORT;
+
 
 // Open DB Connection
 // =================
 app.use(createDbConnection);
 
-app.use((req, res, next) => {
-  console.log(req.body);
-  next();
-});
+
+// Sockets
+// =======
+socketConfig(server);
 
 // Middleware
 // =================
@@ -40,7 +44,7 @@ routerConfig(app);
 
 // Start Server
 // ============
-app.listen(port, (error) => {
+server.listen(port, (error) => {
   if (error) {
     console.error(error); // eslint-disable-line no-console
   } else {
