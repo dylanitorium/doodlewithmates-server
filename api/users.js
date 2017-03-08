@@ -1,6 +1,6 @@
 import rethinkdb from 'rethinkdb';
 
-const getUser = ({ id }, conn) => (
+export const getUser = ({ id }, conn) => (
   rethinkdb.table('users')
   .get(id)
   .run(conn)
