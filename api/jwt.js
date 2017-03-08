@@ -12,3 +12,14 @@ export const signJwtToken = user => (
     resolve(token);
   })
 );
+
+export const getIdFromToken = token => (
+  new Promise((resolve, reject) => (
+    jwt.verify(token, config.JWT.SECRET, (error, { id }) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(id);
+    })
+  ))
+);

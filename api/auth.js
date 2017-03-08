@@ -8,7 +8,7 @@ const getAccessTokenParameters = code => ({
   code,
 });
 
-const userProperties = ({ id, name, picture}) => ({
+const userProperties = ({ id, name, picture }) => ({
   id,
   name,
   picture: picture.data.url,
