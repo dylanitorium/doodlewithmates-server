@@ -7,13 +7,10 @@ export default (server) => {
   const io = socketIo(server);
   io.use(ioSession);
   io.on(Events.CONNECTION, (socket) => {
-    console.log(socket.request.session);
-    socket.on(Events.ON_AFTER_CONNECTION, rethinkdbService.handleOnAfterConnection);
+    const { request } = socket;
+    socket.on(Events.ON_AFTER_CONNECTION, rethinkdbService.handleOnAfterConnection(request));
     socket.on(Events.DRAW, rethinkdbService.handleDraw);
-    socket.on(Events.ON_BEFORE_DISCONNECT, rethinkdbService.handleOnBeforeDisconnection);
-    socket.on(Events.DISCONNECTION, () => {
-
-    });
+    socket.on(Events.DISCONNECTION, rethinkdbService.handleDisconnection(request));
     rethinkdbService.socketConfig(socket);
   });
 };

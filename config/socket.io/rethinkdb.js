@@ -16,25 +16,34 @@ const setUserAsInactive = (id) => {
   });
 };
 
+const setSessionToken = (request, token) => (request.session.token = token);
+
+const getSessionToken = request => (request.session.token);
+
 export const handleDraw = (data) => {
   console.log('This event will handle draw. It will update the layer for the user in the database from the data');
   console.log(data);
 };
 
-export const handleOnAfterConnection = (token) => {
-  console.log('This event will recieve a user id from the client authenticaed session. It will callback to set the user as active and assign a colour')
-  console.log(token);
+export const handleOnAfterConnection = request => (
+  (token) => {
+    console.log('This event will recieve a user id from the client authenticaed session. It will callback to set the user as active and assign a colour')
+    console.log(token);
+    setSessionToken(request, token);
+    jwtService.getIdFromToken(token)
+    .then(setUserAsActive);
+  }
+);
 
-  // Add token to session
-  jwtService.getIdFromToken(token)
-  .then(setUserAsActive);
-};
-
-export const handleOnBeforeDisconnection = (token) => {
-  console.log('This will take the user id from the client authenticaed session and deactive the user, removing any layers from them as well as colour')
-  jwtService.getIdFromToken(token)
-  .then(setUserAsInactive);
-};
+export const handleDisconnection = request => (
+  () => {
+    console.log('This will take the user id from the client authenticaed session and deactive the user, removing any layers from them as well as colour')
+    const token = getSessionToken(request);
+    console.log(token);
+    jwtService.getIdFromToken(token)
+    .then(setUserAsInactive);
+  }
+);
 
 export const socketConfig = (client) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
