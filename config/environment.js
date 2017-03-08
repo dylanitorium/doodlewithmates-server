@@ -17,6 +17,9 @@ const CONFIG = {
   JWT: {
     SECRET: 'dead_salt',
   },
+  SESSION: {
+    SECRET: 'dead_salt',
+  },
 };
 
 if (process.env.NODE_ENV === 'production') {

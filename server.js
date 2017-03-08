@@ -30,13 +30,13 @@ const port = PORT;
 app.use(createDbConnection);
 
 
-// Sockets
-// =======
-socketConfig(server);
-
 // Middleware
 // =================
 middlewareConfig(app);
+
+// Sockets
+// =======
+socketConfig(server);
 
 // Router
 // ======

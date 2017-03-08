@@ -24,6 +24,8 @@ export const handleDraw = (data) => {
 export const handleOnAfterConnection = (token) => {
   console.log('This event will recieve a user id from the client authenticaed session. It will callback to set the user as active and assign a colour')
   console.log(token);
+
+  // Add token to session
   jwtService.getIdFromToken(token)
   .then(setUserAsActive);
 };
