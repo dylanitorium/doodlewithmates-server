@@ -30,9 +30,7 @@ export const removeUser = () => {
 
 };
 
-export const getUsers = () => {
-
-};
+export const getUsers = conn => (rethinkdb.table('users').run(conn));
 
 export const addUserToActiveList = () => {
 

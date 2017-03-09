@@ -27,8 +27,6 @@ export const handleDraw = (data) => {
 
 export const handleOnAfterConnection = request => (
   (token) => {
-    console.log('This event will recieve a user id from the client authenticaed session. It will callback to set the user as active and assign a colour')
-    console.log(token);
     setSessionToken(request, token);
     jwtService.getIdFromToken(token)
     .then(setUserAsActive);
@@ -37,9 +35,7 @@ export const handleOnAfterConnection = request => (
 
 export const handleDisconnection = request => (
   () => {
-    console.log('This will take the user id from the client authenticaed session and deactive the user, removing any layers from them as well as colour')
     const token = getSessionToken(request);
-    console.log(token);
     jwtService.getIdFromToken(token)
     .then(setUserAsInactive);
   }
@@ -49,9 +45,10 @@ export const socketConfig = (client) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
     rethinkdb.table('users').changes().run(connection, (error, cursor) => {
       cursor.each((cursorErr, change) => {
-        console.log('change detected');
-        console.log(change);
-        client.emit(DATABASE_UPDATED, change);
+        if (cursorErr) {
+          return console.error(cursorErr);
+        }
+        return client.emit(DATABASE_UPDATED, change);
       });
     });
   });

@@ -29,7 +29,6 @@ const port = PORT;
 // =================
 app.use(createDbConnection);
 
-
 // Middleware
 // =================
 middlewareConfig(app);

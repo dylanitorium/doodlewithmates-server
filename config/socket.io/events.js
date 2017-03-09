@@ -5,4 +5,4 @@ export const DISCONNECTION = 'disconnect';
 
 export const DRAW = 'draw';
 
-export const DATABASE_UPDATED = 'update'
+export const DATABASE_UPDATED = 'update';
