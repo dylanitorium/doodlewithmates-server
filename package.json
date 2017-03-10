@@ -34,6 +34,7 @@
     "jsonwebtoken": "^7.3.0",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
+    "randomcolor": "^0.4.4",
     "rethinkdb": "^2.3.3",
     "socket.io": "^1.7.3"
   }

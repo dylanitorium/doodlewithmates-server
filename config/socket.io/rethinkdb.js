@@ -1,18 +1,29 @@
 import rethinkdb from 'rethinkdb';
+import randomcolor from 'randomcolor';
 import * as jwtService from '../../api/jwt';
-import * as userService from '../../api/users';
 import dbConfig from '../rethinkdb/config';
 import { DATABASE_UPDATED } from './events';
 
 const setUserAsActive = (id) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
-    rethinkdb.table('users').get(id).update({ active: true }).run(connection);
+    rethinkdb.table('users')
+    .get(id)
+    .update({
+      active: true,
+      color: randomcolor(),
+    })
+    .run(connection);
   });
 };
 
 const setUserAsInactive = (id) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
-    rethinkdb.table('users').get(id).update({ active: false }).run(connection);
+    rethinkdb.table('users')
+    .get(id)
+    .update({
+      active: false,
+    })
+    .run(connection);
   });
 };
 

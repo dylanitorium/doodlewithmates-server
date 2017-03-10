@@ -11,6 +11,7 @@ export default (app) => {
 
   // User
   // =====
-  // router.route('/api/users/');
+  router.get('/api/users/', users.getUsers);
+
   app.use(router);
 };
