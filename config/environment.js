@@ -6,7 +6,7 @@ const CONFIG = {
   },
   RETHINKDB: {
     HOST: '0.0.0.0',
-    PORT: 32769,
+    PORT: 32772,
     DB: 'dwm',
   },
   FB: {

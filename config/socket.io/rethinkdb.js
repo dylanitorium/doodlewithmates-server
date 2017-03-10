@@ -47,9 +47,10 @@ const getSessionToken = request => (request.session.token);
 
 export const handleDraw = (data) => {
   const { token, path } = data;
-  console.log(data);
   jwtService.getIdFromToken(token)
-  .then(setUserPath(path));
+  .then((id) => {
+    console.log(id);
+  });
 };
 
 export const handleOnAfterConnection = request => (
