@@ -4,7 +4,7 @@ import * as jwtService from '../../api/jwt';
 import dbConfig from '../rethinkdb/config';
 import { DATABASE_UPDATED } from './events';
 
-const setUserAsActive = (id) => {
+const setUserAsActive = id => (
   rethinkdb.connect(dbConfig, (err, connection) => {
     rethinkdb.table('users')
     .get(id)
@@ -13,8 +13,22 @@ const setUserAsActive = (id) => {
       color: randomcolor(),
     })
     .run(connection);
-  });
-};
+  })
+);
+
+const setUserPath = path => (
+  id => (
+    rethinkdb.connect(dbConfig, (err, connection) => {
+      rethinkdb.table('users')
+      .get(id)
+      .update({
+        path,
+      })
+      .run(connection);
+    })
+  )
+);
+
 
 const setUserAsInactive = (id) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
@@ -32,8 +46,10 @@ const setSessionToken = (request, token) => (request.session.token = token);
 const getSessionToken = request => (request.session.token);
 
 export const handleDraw = (data) => {
-  console.log('This event will handle draw. It will update the layer for the user in the database from the data');
+  const { token, path } = data;
   console.log(data);
+  jwtService.getIdFromToken(token)
+  .then(setUserPath(path));
 };
 
 export const handleOnAfterConnection = request => (
