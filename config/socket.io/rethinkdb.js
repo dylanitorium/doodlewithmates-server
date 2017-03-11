@@ -2,7 +2,7 @@ import rethinkdb from 'rethinkdb';
 import randomcolor from 'randomcolor';
 import * as jwtService from '../../api/jwt';
 import dbConfig from '../rethinkdb/config';
-import { DATABASE_UPDATED } from './events';
+import { USER_CHANGE } from './events';
 
 const setUserAsActive = id => (
   rethinkdb.connect(dbConfig, (err, connection) => {
@@ -12,21 +12,8 @@ const setUserAsActive = id => (
       active: true,
       color: randomcolor(),
     })
-    .run(connection);
+    .run(connection, { durability: 'soft' });
   })
-);
-
-const setUserPath = path => (
-  id => (
-    rethinkdb.connect(dbConfig, (err, connection) => {
-      rethinkdb.table('users')
-      .get(id)
-      .update({
-        path,
-      })
-      .run(connection);
-    })
-  )
 );
 
 
@@ -45,13 +32,9 @@ const setSessionToken = (request, token) => (request.session.token = token);
 
 const getSessionToken = request => (request.session.token);
 
-export const handleDraw = (data) => {
-  const { token, path } = data;
-  jwtService.getIdFromToken(token)
-  .then((id) => {
-    console.log(id);
-  });
-};
+export const handleDrawProgress = socket => (data => (socket.broadcast.emit('draw:change', data)));
+
+export const handleDrawEnd = () => {};
 
 export const handleOnAfterConnection = request => (
   (token) => {
@@ -69,14 +52,14 @@ export const handleDisconnection = request => (
   }
 );
 
-export const socketConfig = (client) => {
+export const socketConfig = (socket) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
     rethinkdb.table('users').changes().run(connection, (error, cursor) => {
       cursor.each((cursorErr, change) => {
         if (cursorErr) {
           return console.error(cursorErr);
         }
-        return client.emit(DATABASE_UPDATED, change);
+        return socket.emit(USER_CHANGE, change);
       });
     });
   });

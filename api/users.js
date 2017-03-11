@@ -5,7 +5,6 @@ import * as jwt from './jwt';
 
 const formatQuery = query => (
   new Promise((resolve) => {
-    console.log(query);
     if (query.token) {
       return jwt.getIdFromToken(query.token).then(id => resolve({ id }));
     }
@@ -44,10 +43,6 @@ export const createOrGetUser = ({ dbConn }) => (
   )
 );
 
-export const removeUser = () => {
-
-};
-
 export const getUsers = query => (
   rethinkdb.connect(config)
   .then((connection) => {
@@ -61,8 +56,3 @@ export const getUsers = query => (
   .then(cursor => cursor.toArray())
   .then(formatForEmber('user'))
 );
-
-
-export const addUserToActiveList = () => {
-
-};
