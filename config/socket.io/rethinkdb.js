@@ -16,6 +16,16 @@ const setUserAsActive = id => (
   })
 );
 
+const setUserPath = ({ id, path }) => {
+  rethinkdb.connect(dbConfig, (err, connection) => {
+    rethinkdb.table('users')
+    .get(id)
+    .update({
+      path,
+    })
+    .run(connection, { durability: 'soft' });
+  });
+};
 
 const setUserAsInactive = (id) => {
   rethinkdb.connect(dbConfig, (err, connection) => {
@@ -23,6 +33,7 @@ const setUserAsInactive = (id) => {
     .get(id)
     .update({
       active: false,
+      path: null,
     })
     .run(connection);
   });
@@ -34,9 +45,9 @@ const getSessionToken = request => (request.session.token);
 
 export const handleDrawProgress = socket => (data => (socket.broadcast.emit('draw:change', data)));
 
-export const handleDrawEnd = () => {};
+export const handleDrawEnd = setUserPath;
 
-export const handleOnAfterConnection = request => (
+export const handleOnAfterConnection = ({ request }) => (
   (token) => {
     setSessionToken(request, token);
     jwtService.getIdFromToken(token)
@@ -44,9 +55,9 @@ export const handleOnAfterConnection = request => (
   }
 );
 
-export const handleDisconnection = request => (
+export const handleDisconnection = socket => (
   () => {
-    const token = getSessionToken(request);
+    const token = getSessionToken(socket.request);
     jwtService.getIdFromToken(token)
     .then(setUserAsInactive);
   }
