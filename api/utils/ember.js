@@ -8,7 +8,6 @@ const formatItem = type => (
   )
 );
 
-
 export const formatForEmber = type => (
   array => ({
     data: array.map(formatItem(type)),
