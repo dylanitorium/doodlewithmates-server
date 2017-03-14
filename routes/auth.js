@@ -14,5 +14,5 @@ export const login = (req, res) => {
   .then(users.setUserColour)
   .then(jwt.signJwtToken)
   .then(token => (res.json({ token })))
-  .catch(error => (console.error(error)));
+  .catch(console.error);
 };
