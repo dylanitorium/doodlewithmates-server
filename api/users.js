@@ -1,8 +1,14 @@
-import rethinkdb from 'rethinkdb';
 import randomcolor from 'randomcolor';
+import User from '../models/user';
+
 import config from '../config/rethinkdb/config';
 import { formatForEmber } from './utils/ember';
 import * as jwt from './jwt';
+
+// export const getUser = cond => User.findOne(cond);
+
+
+export const getAllUsers = () => User.find().exec();
 
 const formatQuery = query => (
   new Promise((resolve) => {
@@ -18,46 +24,16 @@ const formatQuery = query => (
   })
 );
 
-export const getUser = ({ id }) => (
-  new Promise((resolve, reject) => (
-    rethinkdb.connect(config, (err, connection) => (
-      rethinkdb.table('users')
-      .get(id)
-      .run(connection)
-      .then((user) => {
-        resolve(user);
-      })
-      .error(error => reject(error))
-    ))
-  ))
-);
+export const getUser = ({ id }) => (User.findById(id));
 
-export const createUser = (user, conn) => (
-  rethinkdb.table('users')
-  .insert(user)
-  .run(conn, { durability: 'soft' })
-  .then(() => (user))
-);
+export const createUser = user => (User.create(user));
 
 export const createOrGetUser = ({ dbConn }) => (
-  user => (
-    getUser(user, dbConn)
-    .then((existing) => {
-      if (!existing) {
-        return createUser(user, dbConn);
-      }
-      return existing;
-    }).catch(err => err)
-  )
+
 );
 
 export const updateUser = (id, data) => (
-  rethinkdb.connect(config, (err, connection) => {
-    rethinkdb.table('users')
-    .get(id)
-    .update(data)
-    .run(connection, { durability: 'soft' });
-  })
+
 );
 
 export const setUserColour = user => (
@@ -66,15 +42,5 @@ export const setUserColour = user => (
 
 
 export const getUsers = query => (
-  rethinkdb.connect(config)
-  .then((connection) => {
-    if (query) {
-      return formatQuery(query).then(formattedQuery => (
-        rethinkdb.table('users').filter(formattedQuery).run(connection)
-      ));
-    }
-    return rethinkdb.table('users').run(connection);
-  })
-  .then(cursor => cursor.toArray())
-  .then(formatForEmber('user'))
+
 );

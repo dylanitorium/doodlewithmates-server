@@ -2,12 +2,11 @@
 import 'babel-polyfill';
 import express from 'express';
 import http from 'http';
+import mongoose from 'mongoose';
 
 import config from './config/environment';
-import {
-  createDbConnection,
-  closeDbConnection,
-} from './middleware/database';
+
+import mongooseConfig from './config/mongoose';
 import middlewareConfig from './middleware';
 import routerConfig from './routes';
 import socketConfig from './config/socket.io';
@@ -24,10 +23,7 @@ const app = express();
 const server = http.createServer(app);
 const port = PORT;
 
-
-// Open DB Connection
-// =================
-app.use(createDbConnection);
+mongooseConfig(mongoose);
 
 // Middleware
 // =================
@@ -52,6 +48,3 @@ server.listen(port, (error) => {
     console.info('==========');// eslint-disable-line no-console
   }
 });
-
-
-app.use(closeDbConnection);
