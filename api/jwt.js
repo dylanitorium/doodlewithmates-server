@@ -13,6 +13,9 @@ export const signJwtToken = user => (
   })
 );
 
+/*
+Something funky going on here, the data being signed and returned is a doc and not the data we need2
+*/
 export const getIdFromToken = token => (
   new Promise((resolve, reject) => {
     jwt.verify(token, config.JWT.SECRET, (error, data) => {
@@ -20,8 +23,8 @@ export const getIdFromToken = token => (
         reject(error);
       }
       if (data) {
-        resolve(data.id);
+        resolve(data._doc.fbid);
       }
-    })
+    });
   })
 );

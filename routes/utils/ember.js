@@ -2,7 +2,7 @@ const formatItem = type => (
   item => (
     {
       type,
-      id: item.id,
+      id: item.fbid,
       attributes: item,
     }
   )

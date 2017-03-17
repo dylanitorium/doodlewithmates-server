@@ -9,7 +9,7 @@ const getAccessTokenParameters = code => ({
 });
 
 const userProperties = ({ id, name, picture }) => ({
-  id,
+  fbid: id,
   name,
   picture: picture.data.url,
 });

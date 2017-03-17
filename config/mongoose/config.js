@@ -1,3 +1,3 @@
-export const host = '127.0.0.1';
-export const port = '27017';
-export const path = 'bigday';
+export const host = '0.0.0.0';
+export const port = '32777';
+export const path = 'dwm';

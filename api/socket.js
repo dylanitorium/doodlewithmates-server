@@ -6,19 +6,19 @@ import {
   DRAW_CHANGE,
 } from '../config/socket.io/events';
 
-const setUserAsActive = id => (
-  userService.updateUser(id, {
-    active: true,
-  }).then(() => ({ id }))
+const setUserAsActive = fbid => (
+  userService.updateUser({ fbid }, {
+    isActive: true,
+  }).then(() => ({ fbid }))
 );
 
-const setUserPath = ({ id, path }) => (userService.updateUser(id, { path }));
+const setUserPath = ({ fbid, path }) => (userService.updateUser({ fbid }, { path }));
 
-const setUserAsInactive = id => (
-  userService.updateUser(id, {
-    active: false,
+const setUserAsInactive = fbid => (
+  userService.updateUser(fbid, {
+    isActive: false,
     path: null,
-  }).then(() => ({ id }))
+  }).then(() => ({ fbid }))
 );
 
 const setSessionToken = (request, token) => (request.session.token = token);
@@ -40,6 +40,7 @@ export const handleOnAfterConnection = (io, socket) => (
     });
   }
 );
+
 
 export const handleDisconnection = socket => (
   () => {
