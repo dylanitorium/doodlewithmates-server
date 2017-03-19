@@ -15,7 +15,7 @@ const setUserAsActive = fbid => (
 const setUserPath = ({ fbid, path }) => (userService.updateUser({ fbid }, { path }));
 
 const setUserAsInactive = fbid => (
-  userService.updateUser(fbid, {
+  userService.updateUser({ fbid }, {
     isActive: false,
     path: null,
   }).then(() => ({ fbid }))
