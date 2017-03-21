@@ -27,7 +27,7 @@ const setSessionToken = (request, token) => (request.session.token = token);
 
 const getSessionToken = request => (request.session.token);
 
-export const handleDrawProgress = io => (data => (io.emit(DRAW_CHANGE, data)));
+export const handleDrawProgress = socket => (data => (socket.broadcast.emit(DRAW_CHANGE, data)));
 
 export const handleDrawEnd = setUserPath;
 
