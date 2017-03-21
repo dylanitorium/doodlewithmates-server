@@ -12,7 +12,9 @@ const setUserAsActive = fbid => (
   }).then(() => ({ fbid }))
 );
 
-const setUserPath = ({ fbid, path }) => (userService.updateUser({ fbid }, { path }));
+const setUserPath = ({ fbid, path }) => {
+  userService.updateUser({ fbid }, { path });
+};
 
 const setUserAsInactive = fbid => (
   userService.updateUser({ fbid }, {
@@ -25,7 +27,7 @@ const setSessionToken = (request, token) => (request.session.token = token);
 
 const getSessionToken = request => (request.session.token);
 
-export const handleDrawProgress = socket => (data => (socket.broadcast.emit(DRAW_CHANGE, data)));
+export const handleDrawProgress = io => (data => (io.emit(DRAW_CHANGE, data)));
 
 export const handleDrawEnd = setUserPath;
 
@@ -42,11 +44,11 @@ export const handleOnAfterConnection = (io, socket) => (
 );
 
 
-export const handleDisconnection = socket => (
+export const handleDisconnection = (io, socket) => (
   () => {
     jwtService.getIdFromToken(getSessionToken(socket.request))
     .then(setUserAsInactive)
     .then(userService.getUser)
-    .then(user => (socket.broadcast.emit(USER_DEACTIVATED, user)));
+    .then(user => (io.emit(USER_DEACTIVATED, user)));
   }
 );
