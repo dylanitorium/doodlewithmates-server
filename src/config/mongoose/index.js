@@ -1,6 +1,6 @@
-import { MONGO } from '../environment';
+import config from '../environment';
 
-const { HOST, PORT, PATH } = MONGO;
+const { HOST, PORT, PATH } = config.MONGO;
 
 export const mongoUri = `mongodb://${HOST}:${PORT}/${PATH}`;
 

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && mkdir dist",
-    "build-server": "babel src -d dist",
+    "build-server": "cp -R node_modules dist/node_modules && babel src -d dist",
     "build": "npm run clean && npm run build-server"
   },
   "repository": "https://github.com/dylanitorium/doodlewithmates-server",
@@ -36,9 +36,7 @@
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.9.0",
     "morgan": "^1.7.0",
-    "passport": "^0.3.2",
     "randomcolor": "^0.4.4",
-    "rethinkdb": "^2.3.3",
     "socket.io": "^1.7.3"
   }
 }
