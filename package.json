@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && mkdir dist",
-    "build-server": "cp -R node_modules dist/node_modules && babel src -d dist",
+    "build-server": "babel src -d dist",
     "build": "npm run clean && npm run build-server"
   },
   "repository": "https://github.com/dylanitorium/doodlewithmates-server",
