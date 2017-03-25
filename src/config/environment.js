@@ -23,9 +23,11 @@ const CONFIG = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  CONFIG.FB.REDIRECT_URI = 'https://doodlewithmates.xyz';
+  CONFIG.FB.REDIRECT_URI = 'https://doodlewithmates.xyz/';
   CONFIG.EXPRESS.PORT = 8181;
   CONFIG.MONGO.PORT = 27017;
 }
+
+console.log(CONFIG.FB.REDIRECT_URI);
 
 export default CONFIG;
