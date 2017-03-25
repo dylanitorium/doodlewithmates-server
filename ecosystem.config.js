@@ -2,14 +2,14 @@ module.exports = {
   apps: [
     {
       name: 'dwms',
-      script: './server.babel.js',
+      script: './build/server.js',
       env: {
         NODE_ENV: 'development',
       },
       env_production: {
         NODE_ENV: 'production',
       },
-      watch: './',
+      watch: true,
     },
   ],
 };

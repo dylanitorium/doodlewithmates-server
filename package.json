@@ -5,7 +5,9 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "babel-node config/rethinkdb/init.js"
+    "clean": "rm -rf build && mkdir build",
+    "build-server": "babel -d ./build server.js -s",
+    "build": "npm run clean && npm run build-server"
   },
   "repository": "https://github.com/dylanitorium/doodlewithmates-server",
   "author": "",

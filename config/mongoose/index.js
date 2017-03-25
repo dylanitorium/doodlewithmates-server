@@ -1,11 +1,8 @@
-import {
-  host,
-  port,
-  path,
-} from './config';
+import { MONGO } from '../environment';
 
+const { HOST, PORT, PATH } = MONGO;
 
-export const mongoUri = `mongodb://${host}:${port}/${path}`;
+export const mongoUri = `mongodb://${HOST}:${PORT}/${PATH}`;
 
 
 export default (mongoose) => {

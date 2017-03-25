@@ -4,10 +4,10 @@ const CONFIG = {
   EXPRESS: {
     PORT: 8080,
   },
-  RETHINKDB: {
+  MONGO: {
     HOST: '0.0.0.0',
-    PORT: 32775,
-    DB: 'dwm',
+    PORT: '32777',
+    PATH: 'dwm',
   },
   FB: {
     APP_ID: '742896385870748',
@@ -23,7 +23,9 @@ const CONFIG = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  // ...
+  CONFIG.FB.REDIRECT_URI = 'https://doodlewithmates.xyz';
+  CONFIG.EXPRESS.PORT = 8181;
+  CONFIG.MONGO.PORT = 27017;
 }
 
 export default CONFIG;
